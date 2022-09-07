@@ -1,0 +1,20 @@
+name: MSYS2
+on: [push, pull_request]
+
+jobs:
+  msys2-mingw64:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: git 
+      - name: CI-Build gcc-fortran mingw-w64-x86_64-gedit mingw-w64-x86_64-gnuplot
+        run: |
+          echo 'Running in MSYS2!'
+          ./ci-build.sh
